@@ -48,6 +48,19 @@ class Container extends React.Component {
 }
 ```
 
+To render this component you could then specify the configuration as props:
+
+``` js
+ReactDOM.render((
+  <Container
+    height={window.innerHeight}
+    itemHeight={50}
+    total={100000}
+    reverse={false}
+  />
+)), main);
+```
+
 **Required props**:
 
 - `height` The value that is used on the container, if you use a string, it
