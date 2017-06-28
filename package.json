@@ -1,0 +1,34 @@
+{
+  "name": "react-hyperlist",
+  "version": "1.0.0-alpha",
+  "description": "Wraps HyperList for React",
+  "main": "dist/react-hyperlist.js",
+  "scripts": {
+    "build": "npm run build-umd && npm run build-min",
+    "build-umd": "NODE_ENV=umd rollup -c rollup.config.js",
+    "build-min": "NODE_ENV=min rollup -c rollup.config.js"
+  },
+  "keywords": [
+    "hyperlist",
+    "virtual",
+    "scrolling",
+    "react"
+  ],
+  "author": "Tim Branyen (@tbranyen)",
+  "license": "MIT",
+  "dependencies": {
+    "hyperlist": "tbranyen/hyperlist#4e7b24b96297b1916bfed139a2f3788d58e1e6b0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-react": "6.24.1",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "rollup": "0.43.0",
+    "rollup-plugin-babel": "2.7.1",
+    "rollup-plugin-commonjs": "8.0.2",
+    "rollup-plugin-node-resolve": "2.0.0",
+    "rollup-plugin-replace": "1.1.1",
+    "rollup-plugin-visualizer": "0.3.1"
+  }
+}
