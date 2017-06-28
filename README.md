@@ -23,25 +23,17 @@ import HyperList from 'react-hyperlist';
 
 class Container extends React.Component {
   render() {
+    const { generate } = this;
+    const { height } = this.state;
+    const config = Object.assign({}, this.props, { height, generate });
+
     return (
-      <HyperList {...this.state} />
+      <HyperList {...config} />
     );
   }
 
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({ generate: this.generate }, props);
-  }
-
   componentDidMount() {
-    window.onresize = e => {
-      this.state.height = window.innerHeight;
-      this.setState(this.state);
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(Object.assign({ generate: this.generate }, nextProps));
+    window.onresize = e => this.setState({ height: window.innerHeight });
   }
 
   componentWillUnmount() {
@@ -50,7 +42,7 @@ class Container extends React.Component {
 
   generate(i) {
     return (
-      <div>{i}</div>
+      <div>i</div>
     );
   }
 }

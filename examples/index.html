@@ -63,23 +63,15 @@
 
   class Container extends React.Component {
     render() {
-      return h(HyperList, this.state);
-    }
+      const { generate } = this;
+      const { height } = this.state;
+      const config = Object.assign({}, this.props, { height, generate });
 
-    constructor(props) {
-      super(props);
-      this.state = Object.assign({ generate: this.generate }, props);
+      return h(HyperList, config);
     }
 
     componentDidMount() {
-      window.onresize = e => {
-        this.state.height = window.innerHeight;
-        this.setState(this.state);
-      };
-    }
-
-    componentWillReceiveProps(nextProps) {
-      this.setState(Object.assign({ generate: this.generate }, nextProps));
+      window.onresize = e => this.setState({ height: window.innerHeight });
     }
 
     componentWillUnmount() {
