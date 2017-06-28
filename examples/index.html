@@ -62,14 +62,13 @@
   const { render } = ReactDOM;
 
   class Container extends React.Component {
+    render() {
+      return h(HyperList, this.state);
+    }
+
     constructor(props) {
       super(props);
-
-      const { generate } = this;
-
-      this.state = Object.assign({
-        generate, 
-      }, props);
+      this.state = Object.assign({ generate: this.generate }, props);
     }
 
     componentDidMount() {
@@ -79,6 +78,10 @@
       };
     }
 
+    componentWillReceiveProps(nextProps) {
+      this.setState(Object.assign({ generate: this.generate }, nextProps));
+    }
+
     componentWillUnmount() {
       window.onresize = null;
     }
@@ -86,13 +89,9 @@
     generate(i) {
       return h('div', null, i);
     }
-
-    render() {
-      return h(HyperList, this.state);
-    }
   }
 
-  ReactDOM.render(h(Container, {
+  render(h(Container, {
     height: window.innerHeight,
     itemHeight: 50,
     total: 100000,

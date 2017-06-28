@@ -28,7 +28,10 @@ class Container extends React.Component {
     );
   }
 
-  state = {}
+  constructor(props) {
+    super(props);
+    this.state = Object.assign({ generate: this.generate }, props);
+  }
 
   componentDidMount() {
     window.onresize = e => {
@@ -37,17 +40,18 @@ class Container extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState(Object.assign({ generate: this.generate }, nextProps));
+  }
+
   componentWillUnmount() {
     window.onresize = null;
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { generate } = this;
-    this.setState(Object.assign({ generate }, nextProps));
-  }
-
   generate(i) {
-    return h('div', null, i);
+    return (
+      <div>{i}</div>
+    );
   }
 }
 ```
