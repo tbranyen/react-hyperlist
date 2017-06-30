@@ -17,6 +17,8 @@ single JavaScript file.
 Using this component is relatively easy compared to other solutions in the
 React space.
 
+[**Click here to learn more about HyperList and its options!**](https://github.com/tbranyen/hyperlist)
+
 ``` js
 import React, { Component } from 'react';
 import HyperList from 'react-hyperlist';
