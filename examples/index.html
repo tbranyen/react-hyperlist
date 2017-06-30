@@ -20,6 +20,9 @@
       overflow: hidden;
     }
 
+    main { height: 100%; }
+    main > div { overflow-y: hidden !important; }
+
     @media
     only screen and (-webkit-min-device-pixel-ratio : 1.5),
     only screen and (min-device-pixel-ratio : 1.5) {
@@ -31,13 +34,11 @@
     }
 
     .vrow {
-      width: 100%;
-      height: 30px;
-      max-height: 30px;
+      height: 100%;
       color: #000;
-      margin: 0;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      width: 50px;
     }
 
     .vrow p {
@@ -47,10 +48,17 @@
       margin: 0;
       color: #5b5b5b;
     }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
   </style>
 </head>
 <body>
 
+<input type="range" min="1" max="100000" value="100000" oninput="window.change(window.event)">
 <main></main>
 
 <script type="text/javascript" src="../node_modules/react/dist/react.js"></script>
@@ -64,7 +72,7 @@
   class Container extends React.Component {
     render() {
       const { generate } = this;
-      const { height } = this.state;
+      const { height } = this.props;
       const config = Object.assign({}, this.props, { height, generate });
 
       return h(HyperList, config);
@@ -79,16 +87,27 @@
     }
 
     generate(i) {
-      return h('div', null, i);
+      return h('div', { className: 'vrow' }, i);
+    }
+
+    constructor(props) {
+      super(props);
+      this.state = { height: props.height };
     }
   }
 
-  render(h(Container, {
-    height: window.innerHeight,
-    itemHeight: 50,
-    total: 100000,
-    reverse: false,
-  }), main);
+  function change({ target }) {
+    render(h(Container, {
+      width: window.innerWidth,
+      height: 'calc(100% - 49px)',
+      itemHeight: 50,
+      total: target.value,
+      reverse: true,
+      horizontal: true,
+    }), main);
+  }
+
+  change({ target: { value: 100000 } });
 </script>
 </body>
 </html>
