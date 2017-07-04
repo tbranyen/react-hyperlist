@@ -9,13 +9,14 @@ provide a virtual scrolling area that is highly performant and lightweight.
 npm install react-hyperlist --save
 ```
 
-Of course it can also just be added to any project since it consists of a
-single JavaScript file.
+It can also just be added to any project since it consists of a single
+JavaScript file.
 
 ## Usage
 
-Using this component is relatively easy compared to other solutions in the
-React space.
+Using this component is relatively easy compared to other solutions. It is a
+single Component that you give the bare minimum information to and it will call
+a generate function per item to be rendered.
 
 [**Click here to learn more about HyperList and its options!**](https://github.com/tbranyen/hyperlist)
 
@@ -25,42 +26,18 @@ import HyperList from 'react-hyperlist';
 
 class Container extends React.Component {
   render() {
-    const { generate } = this;
-    const { height } = this.state;
-    const config = Object.assign({}, this.props, { height, generate });
-
     return (
-      <HyperList {...config} />
-    );
-  }
-
-  componentDidMount() {
-    window.onresize = e => this.setState({ height: window.innerHeight });
-  }
-
-  componentWillUnmount() {
-    window.onresize = null;
-  }
-
-  generate(i) {
-    return (
-      <div>i</div>
+      <HyperList
+        height={window.innerHeight}
+        itemHeight={50}
+        total={100000}
+        generate={i => (
+          <div>i</div>
+        )}
+      />
     );
   }
 }
-```
-
-To render this component you could then specify the configuration as props:
-
-``` js
-ReactDOM.render((
-  <Container
-    height={window.innerHeight}
-    itemHeight={50}
-    total={100000}
-    reverse={false}
-  />
-)), main);
 ```
 
 **Required props**:

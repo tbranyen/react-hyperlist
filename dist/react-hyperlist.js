@@ -407,14 +407,14 @@ var HyperList = function () {
   }, {
     key: '_computePositions',
     value: function _computePositions() {
-      var from = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+      var from = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 
       var config = this._config;
       var total = config.total;
       var reverse = config.reverse;
 
-      if (from < 1 && !reverse) {
-        from = 1;
+      if (from < 0 && !reverse) {
+        from = 0;
       }
 
       for (var i = from; i < total; i++) {
@@ -422,10 +422,14 @@ var HyperList = function () {
           if (i === 0) {
             this._itemPositions[0] = this._scrollHeight - this._itemHeights[0];
           } else {
-            this._itemPositions[i] = this._itemPositions[i - 1] - this._itemHeights[i];
+            this._itemPositions[i] = this._itemPositions[i - 1] - (this._itemHeights[i] || 0);
           }
         } else {
-          this._itemPositions[i] = this._itemHeights[i - 1] + this._itemPositions[i - 1];
+          if (i) {
+            this._itemPositions[i] = this._itemHeights[i - 1] + (this._itemPositions[i - 1] || 0);
+          } else {
+            this._itemPositions[i] = 0;
+          }
         }
       }
     }
@@ -4568,13 +4572,17 @@ var _class = function (_Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       var config = Object.assign({}, this.state.config, nextProps);
-      this.list.refresh(this, config);
-      this.setState({ config: config });
+      if (nextProps.total !== this.state.config.total) {
+        this.list.refresh(this, config);
+        this.setState({ config: config });
+      }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      this.list.destroy();
+      if (this.list) {
+        this.list.destroy();
+      }
     }
   }]);
 
